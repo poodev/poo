@@ -31,7 +31,7 @@ class BasicAuthTest extends AuthTest
 
         $_SERVER['PHP_AUTH_USER'] = $token;
         $_SERVER['PHP_AUTH_PW'] = 'whatever, we are testers';
-        $filter = ['class' => HttpBasicAuth::className()];
+        $filter = ['class' => HttpBasicAuth::class];
         $this->ensureFilterApplies($token, $login, $filter);
         $_SERVER = $original;
     }
@@ -46,7 +46,7 @@ class BasicAuthTest extends AuthTest
         $original = $_SERVER;
 
         $_SERVER['HTTP_AUTHORIZATION'] = 'Basic ' . base64_encode($token . ':' . 'mypw');
-        $filter = ['class' => HttpBasicAuth::className()];
+        $filter = ['class' => HttpBasicAuth::class];
         $this->ensureFilterApplies($token, $login, $filter);
         $_SERVER = $original;
     }
@@ -61,7 +61,7 @@ class BasicAuthTest extends AuthTest
         $original = $_SERVER;
 
         $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] = 'Basic ' . base64_encode($token . ':' . 'mypw');
-        $filter = ['class' => HttpBasicAuth::className()];
+        $filter = ['class' => HttpBasicAuth::class];
         $this->ensureFilterApplies($token, $login, $filter);
         $_SERVER = $original;
     }
@@ -76,7 +76,7 @@ class BasicAuthTest extends AuthTest
         $_SERVER['PHP_AUTH_USER'] = $login;
         $_SERVER['PHP_AUTH_PW'] = 'whatever, we are testers';
         $filter = [
-            'class' => HttpBasicAuth::className(),
+            'class' => HttpBasicAuth::class,
             'auth' => function ($username, $password) {
                 if (preg_match('/\d$/', (string)$username)) {
                     return UserIdentity::findIdentity($username);
@@ -109,7 +109,7 @@ class BasicAuthTest extends AuthTest
         $sessionId = $session->getId();
 
         $filter = [
-            'class' => HttpBasicAuth::className(),
+            'class' => HttpBasicAuth::class,
             'auth' => function ($username, $password) {
                 $this->fail('Authentication closure should not be called when user is already authenticated');
             },

@@ -95,7 +95,7 @@ class SessionTest extends TestCase
 
     public function testInitUseStrictMode()
     {
-        $this->initStrictModeTest(Session::className());
+        $this->initStrictModeTest(Session::class);
     }
 
     public function testUseStrictMode()
@@ -110,6 +110,6 @@ class SessionTest extends TestCase
             }
         }
 
-        $this->useStrictModeTest(Session::className());
+        $this->useStrictModeTest(Session::class);
     }
 }

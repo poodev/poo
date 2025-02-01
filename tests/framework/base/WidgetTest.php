@@ -55,8 +55,8 @@ class WidgetTest extends TestCase
     {
         Yii::$container = new Container();
         Yii::$container->setDefinitions([
-            TestWidgetB::className() => [
-                'class' => TestWidget::className()
+            TestWidgetB::class => [
+                'class' => TestWidget::class
             ]
         ]);
 
@@ -76,7 +76,7 @@ class WidgetTest extends TestCase
     {
         Yii::$container = new Container();
         Yii::$container->setDefinitions([
-            TestWidgetB::className() => function () {
+            TestWidgetB::class => function () {
                 return new TestWidget(['id' => 'test']);
             }
         ]);

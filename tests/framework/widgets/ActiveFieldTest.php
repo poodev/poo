@@ -599,8 +599,8 @@ EOD;
 
     public function testWidget()
     {
-        $this->activeField->widget(TestInputWidget::className());
-        $this->assertEquals('Render: ' . TestInputWidget::className(), $this->activeField->parts['{input}']);
+        $this->activeField->widget(TestInputWidget::class);
+        $this->assertEquals('Render: ' . TestInputWidget::class, $this->activeField->parts['{input}']);
         $widget = TestInputWidget::$lastInstance;
 
         $this->assertSame($this->activeField->model, $widget->model);
@@ -608,7 +608,7 @@ EOD;
         $this->assertSame($this->activeField->form->view, $widget->view);
         $this->assertSame($this->activeField, $widget->field);
 
-        $this->activeField->widget(TestInputWidget::className(), ['options' => ['id' => 'test-id']]);
+        $this->activeField->widget(TestInputWidget::class, ['options' => ['id' => 'test-id']]);
         $this->assertEquals('test-id', $this->activeField->labelOptions['for']);
     }
 
@@ -617,7 +617,7 @@ EOD;
         $this->activeField->form->validationStateOn = ActiveForm::VALIDATION_STATE_ON_INPUT;
         $this->activeField->model->addError('attributeName', 'error');
 
-        $this->activeField->widget(TestInputWidget::className());
+        $this->activeField->widget(TestInputWidget::class);
         $widget = TestInputWidget::$lastInstance;
         $expectedOptions = [
             'class' => 'form-control has-error',
@@ -627,7 +627,7 @@ EOD;
         $this->assertEquals($expectedOptions, $widget->options);
 
         $this->activeField->inputOptions = [];
-        $this->activeField->widget(TestInputWidget::className());
+        $this->activeField->widget(TestInputWidget::class);
         $widget = TestInputWidget::$lastInstance;
         $expectedOptions = [
             'class' => 'has-error',
@@ -671,14 +671,14 @@ HTML;
 
     public function testInputOptionsTransferToWidget()
     {
-        $widget = $this->activeField->widget(TestMaskedInput::className(), [
+        $widget = $this->activeField->widget(TestMaskedInput::class, [
             'mask' => '999-999-9999',
             'options' => ['placeholder' => 'pholder_direct'],
         ]);
         $this->assertStringContainsString('placeholder="pholder_direct"', (string) $widget);
 
         // use regex clientOptions instead mask
-        $widget = $this->activeField->widget(TestMaskedInput::className(), [
+        $widget = $this->activeField->widget(TestMaskedInput::class, [
             'options' => ['placeholder' => 'pholder_direct'],
             'clientOptions' => ['regex' => '^.*$'],
         ]);
@@ -686,14 +686,14 @@ HTML;
 
         // transfer options from ActiveField to widget
         $this->activeField->inputOptions = ['placeholder' => 'pholder_input'];
-        $widget = $this->activeField->widget(TestMaskedInput::className(), [
+        $widget = $this->activeField->widget(TestMaskedInput::class, [
             'mask' => '999-999-9999',
         ]);
         $this->assertStringContainsString('placeholder="pholder_input"', (string) $widget);
 
         // set both AF and widget options (second one takes precedence)
         $this->activeField->inputOptions = ['placeholder' => 'pholder_both_input'];
-        $widget = $this->activeField->widget(TestMaskedInput::className(), [
+        $widget = $this->activeField->widget(TestMaskedInput::class, [
             'mask' => '999-999-9999',
             'options' => ['placeholder' => 'pholder_both_direct']
         ]);
